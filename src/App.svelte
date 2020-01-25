@@ -28,7 +28,6 @@
 
   const createSudokuBoard = blanks => {
     generatedGrid = [];
-    window.grid = generatedGrid;
     generatedGrid.push(generateRandomRow());
     for (let i = 1; i < 9; i++) {
       let n = !(i % 3) ? 1 : 3;
