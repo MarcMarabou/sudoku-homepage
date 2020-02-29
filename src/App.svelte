@@ -11,10 +11,15 @@
   let allValid = false;
   let generatedGrid;
 
-  const shuffle = (arr, s = 0, e = arr.length - 1) => {
+  const shuffle = (arr, s = 0, e = arr.length - 1, axis = 0) => {
     for (let i = e; i > s; i--) {
       let j = Math.floor(Math.random() * (i - s + 1) + s);
-      [arr[i], arr[j]] = [arr[j], arr[i]];
+      if (axis == 0) [arr[i], arr[j]] = [arr[j], arr[i]];
+      else {
+        for (let k = 0; k < arr.length; k++) {
+          [arr[k][i], arr[k][j]] = [arr[k][j], arr[k][i]];
+        }
+      }
     }
   };
 
@@ -43,9 +48,13 @@
       }
     });
 
-    shuffle(generatedGrid, 0, 2);
-    shuffle(generatedGrid, 3, 5);
-    shuffle(generatedGrid, 6, 8);
+    // Should probably shuffle the 3x3 grids instead of rows so you can't just recognize the pattern...
+    shuffle(generatedGrid, 0, 2, 0);
+    shuffle(generatedGrid, 3, 5, 0);
+    shuffle(generatedGrid, 6, 8, 0);
+    shuffle(generatedGrid, 0, 2, 1);
+    shuffle(generatedGrid, 3, 5, 1);
+    shuffle(generatedGrid, 6, 8, 1);
 
     for (let n = 81; n > 81 - blanks; ) {
       let x = Math.floor(Math.random() * 9);
@@ -57,7 +66,7 @@
     }
   };
 
-  createSudokuBoard();
+  //createSudokuBoard();
 
   $: createSudokuBoard(blankFields);
 
